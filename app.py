@@ -42,20 +42,22 @@ def callback():
 def handle_text_message(event):
     text = handle_pattern(event.message.text) #message from user
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=text)) #reply the same message from user
+    if (len(text)>0):
+	    line_bot_api.reply_message(
+	        event.reply_token,
+	        TextSendMessage(text=text)) #reply the same message from user
 
 def handle_pattern(text):
-	keyword = text.split(' ')[0]
-	value = text.split(' ')[1]
+	ret = ''
+	if (len(text.split(' '))>=2):
+		keyword = text.split(' ')[0]
+		value = text.split(' ')[1]
 
 	return {
-		'tax': str(float(value)*110/100),
-		'serv': str(int(float(value)*105*110/10000)),
-		'service': str(int(float(value)*105*110/10000))
-	}.get(keyword, 'Keyword not found')
-
+		'tax': ret = str(float(value)*110/100),
+		'serv': ret = str(int(float(value)*105*110/10000)),
+		'service': ret = str(int(float(value)*105*110/10000))
+	}.get(keyword, ret)
 
 if __name__ == "__main__":
 	app.run()

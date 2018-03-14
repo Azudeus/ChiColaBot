@@ -51,15 +51,15 @@ def handle_pattern(text):
 	if (len(text.split(' '))>=2):
 		keyword = text.split(' ')[0]
 		value = text.split(' ')[1]
+		ret = {
+			'tax': str(float(value)*110/100),
+			'serv': str(int(float(value)*105*110/10000)),
+			'service': str(int(float(value)*105*110/10000))
+		}.get(keyword, '')
 	else:
-		keyword = ''
-		value = ''
+		ret = ''
+	return ret
 
-	return {
-		'tax': str(float(value)*110/100),
-		'serv': str(int(float(value)*105*110/10000)),
-		'service': str(int(float(value)*105*110/10000))
-	}.get(keyword, '')
 
 if __name__ == "__main__":
 	app.run()

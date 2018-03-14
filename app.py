@@ -48,16 +48,18 @@ def handle_text_message(event):
 	        TextSendMessage(text=text)) #reply the same message from user
 
 def handle_pattern(text):
-	ret = ''
 	if (len(text.split(' '))>=2):
 		keyword = text.split(' ')[0]
 		value = text.split(' ')[1]
+	else:
+		keyword = ''
+		value = ''
 
 	return {
-		'tax': ret = str(float(value)*110/100),
-		'serv': ret = str(int(float(value)*105*110/10000)),
-		'service': ret = str(int(float(value)*105*110/10000))
-	}.get(keyword, ret)
+		'tax': str(float(value)*110/100),
+		'serv': str(int(float(value)*105*110/10000)),
+		'service': str(int(float(value)*105*110/10000))
+	}.get(keyword, '')
 
 if __name__ == "__main__":
 	app.run()

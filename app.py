@@ -68,7 +68,7 @@ def handle_sum(text):
 	for i in range(len(arr)):
 		if (check_float(arr[i])):
 			total += (float(arr[i]))
-	return str(total)
+	return str(int(total))
 
 def check_float(text):
 	try:

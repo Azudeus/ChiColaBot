@@ -41,10 +41,14 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text #message from user
+    app.logger.info("Request text: " + text)
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=text)) #reply the same message from user
+
+def pattern(text):
+
 
 if __name__ == "__main__":
 	app.run()

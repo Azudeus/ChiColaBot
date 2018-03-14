@@ -54,13 +54,28 @@ def handle_pattern(text):
 		ret = {
 			'tax': str(int(float(value)*110/100)),
 			'serv': str(int(float(value)*105*110/10000)),
-			'service': str(int(float(value)*105*110/10000))
+			'service': str(int(float(value)*105*110/10000)),
+			'sum': handle_sum(text)
 		}.get(keyword, '')
 	except (ValueError, IndexError) as e:
 		ret = ''
 
 	return ret
 
+def handle_sum(text):
+	total = 0.0;
+	arr = text.split(' ')
+	for i in range(len(arr)):
+		if (check_float(arr[i])):
+			total += (float(arr[i]))
+	return str(total)
+
+def check_float(text):
+	try:
+		float(text)
+		return True
+	except (ValueError) as e:
+		return False
 
 if __name__ == "__main__":
 	app.run()

@@ -48,6 +48,7 @@ def handle_text_message(event):
         TextSendMessage(text=text)) #reply the same message from user
 
 def pattern(text):
+	return text
 
 
 if __name__ == "__main__":

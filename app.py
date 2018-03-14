@@ -48,7 +48,7 @@ def handle_text_message(event):
 	        TextSendMessage(text=text)) #reply the same message from user
 
 def handle_pattern(text):
-	if (len(text.split(' '))>=2):
+	try:
 		keyword = text.split(' ')[0]
 		value = text.split(' ')[1]
 		ret = {
@@ -56,8 +56,9 @@ def handle_pattern(text):
 			'serv': str(int(float(value)*105*110/10000)),
 			'service': str(int(float(value)*105*110/10000))
 		}.get(keyword, '')
-	else:
+	except (ValueError, IndexError) as e:
 		ret = ''
+
 	return ret
 
 

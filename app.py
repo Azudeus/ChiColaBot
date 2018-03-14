@@ -40,15 +40,21 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    text = event.message.text #message from user
-    app.logger.info("Request text: " + text)
+    text = handle_pattern(event.message.text) #message from user
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=text)) #reply the same message from user
 
-def pattern(text):
-	return text
+def handle_pattern(text):
+	keyword = text.split(' ')[0]
+	value = text.split(' ')[1]
+
+	return {
+		'tax': str(float(value)*110/100),
+		'serv': str(int(float(value)*105*110/10000)),
+		'service': str(int(float(value)*105*110/10000))
+	}.get(keyword, 'Keyword not found')
 
 
 if __name__ == "__main__":

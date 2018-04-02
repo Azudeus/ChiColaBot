@@ -113,8 +113,8 @@ def handle_convert(text):
 			ret += '\n'
 			ret += value+' '+curr1+' = '+str(round(result,2))+' '+curr2			
 	except (ValueError, IndexError) as e:
-	    app.logger.info(e)
-		ret = e
+	    app.logger.info("log: "+e)
+		ret = ""
 
 	return ret
 

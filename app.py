@@ -77,17 +77,17 @@ def handle_sum(text):
 def handle_convert(text):
 	arr = text.split(' ')
 	req = requests.get('http://data.fixer.io/api/latest?access_key='+fixer_key)
-	reqjson = req.json()
+	reqJson = req.json()
 
 	try:
 		curr1 = arr[1].upper()
 		curr2 = arr[2].upper()
 		value = arr[3]
 
-		rate = float(reqJson['rates'][curr1] / reqJson['rates'][curr2])
+		rate = float(reqJson['rates'][curr2] / reqJson['rates'][curr1])
 		ret = 'Rate from '+curr1+' to '+curr2+' = '+str(round(rate,3))
 		if check_float(value):
-			result = value*rate
+			result = float(value)*rate
 			ret += '\n'
 			ret += value+' '+curr1+' = '+str(round(result,2))+' '+curr2			
 	except (ValueError, IndexError) as e:

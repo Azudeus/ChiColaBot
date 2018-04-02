@@ -54,16 +54,17 @@ def handle_pattern(text):
 	try:
 		keyword = text.split(' ')[0]
 		value = text.split(' ')[1]
-		pattern = {
-			'tax': str(int(float(value)*110/100)),
-			'serv': str(int(float(value)*105*110/10000)),
-			'service': str(int(float(value)*105*110/10000)),
-			'sum': handle_sum(text),
-			'conv': handle_convert(text),
-			'convert': handle_convert(text)
-		}
-		ret = pattern[keyword]()
-	except (ValueError, IndexError, KeyError) as e:
+		if keyword == 'tax':
+			ret = str(int(float(value)*110/100))
+		elif keyword == 'serv' or keyword == 'service':
+			ret = str(int(float(value)*105*110/10000))
+		elif keyword == 'sum':
+			ret = handle_sum(text)
+		elif keyword == 'conv' or keyword == 'convert':
+			ret = handle_convert(text)
+		elif keyword == 'jpytoidr':
+			ret = handle_convert_jpy_idr(value)
+	except (ValueError, IndexError) as e:
 		ret = ''
 
 	return ret
@@ -92,7 +93,19 @@ def handle_convert(text):
 			ret += value+' '+curr1+' = '+str(round(result,2))+' '+curr2
 	except (ValueError, IndexError, KeyError) as e:
 		ret = 'Converter error'
+	return ret
 
+def handle_convert_jpy_idr(text):
+	if check_float(text):
+		req = requests.get('http://data.fixer.io/api/latest?access_key='+fixer_key+'&symbols=IDR,JPY')
+		reqJson = req.json()
+		rate = float(reqJson['rates']['IDR'] / reqJson['rates']['JPY'])
+		ret = 'Rate from JPY to IDR = '+str(round(rate,3))
+		result = float(text)*rate
+		ret += '\n'
+		ret += text+' JPY = '+str(round(result,2))+' IDR'
+	else:
+		ret = ''
 	return ret
 
 def check_float(text):

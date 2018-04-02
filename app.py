@@ -40,7 +40,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    text = handle_pattern(event.message.text) #message from user
+    text = handle_pattern(event.message.text.lower()) #message from user
 
     if (len(text)>0):
 	    line_bot_api.reply_message(

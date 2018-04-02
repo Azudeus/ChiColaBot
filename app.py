@@ -100,6 +100,7 @@ def handle_convert(text):
 	arr = text.split(' ')
 	req = requests.get('http://data.fixer.io/api/latest?access_key='+fixer_key)
 	reqJson = req.json()
+	ret = ''
 
 	try:
 		curr1 = arr[1].upper()
@@ -114,7 +115,6 @@ def handle_convert(text):
 			ret += value+' '+curr1+' = '+str(round(result,2))+' '+curr2			
 	except (ValueError, IndexError) as e:
 	    app.logger.info("log: "+e)
-		ret = ""
 
 	return ret
 

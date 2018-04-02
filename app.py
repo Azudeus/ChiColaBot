@@ -78,7 +78,6 @@ def handle_convert(text):
 	arr = text.split(' ')
 	req = requests.get('http://data.fixer.io/api/latest?access_key='+fixer_key)
 	reqjson = req.json()
-	return str(rate)
 
 	try:
 		curr1 = arr[1].upper()
@@ -93,6 +92,8 @@ def handle_convert(text):
 			ret += value+' '+curr1+' = '+str(round(result,2))+' '+curr2			
 	except (ValueError, IndexError) as e:
 		ret = ''
+
+	return ret
 
 def check_float(text):
 	try:

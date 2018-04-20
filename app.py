@@ -47,9 +47,15 @@ def handle_text_message(event):
     text = handle_pattern(event.message.text.lower()) #message from user
 
     if (len(text)>0):
+    	message_reply = TextSendMessage(text=text)
+    	if (text == 'tsukkomi'):
+    		message_reply = ImageSendMessage(
+			    original_content_url='https://media.tenor.com/images/d85d3a03369bdd47b87ff4dc5c803a66/tenor.gif',
+			    preview_image_url='https://media.tenor.com/images/d85d3a03369bdd47b87ff4dc5c803a66/tenor.gif'
+			)
 	    line_bot_api.reply_message(
 	        event.reply_token,
-	        TextSendMessage(text=text)) #reply the same message from user
+	        message_reply) #reply the same message from user
 
 def handle_pattern(text):
 	try:
@@ -69,6 +75,8 @@ def handle_pattern(text):
 			ret = handle_choose(text)
 		elif keyword == 'rng':
 			ret = handle_rng(text)
+		elif keyword == 'tsukkomi':
+			ret = 'tsukkomi'
 	except (ValueError, IndexError) as e:
 		ret = ''
 

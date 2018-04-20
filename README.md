@@ -11,6 +11,8 @@ Note: Case insensetive
 * Sum <%=Value> <%=Value> .. : Count sum of all the value
 * Conv <%=CurrencyFrom%> <%=Currency To%> <%=Value%> : Show rates between the two currency and count the converted value
 * JpyToIdr <%=Value> : Show rates between JPY to IDR and count the converted value
+* Choose <%=Text>, <%=Text> .. : Randomly choose one text from all supplied <%=Text> (comma separated)
+* RNG <%=MinValue> <%=MaxValue> : Randomly generate integer x such that <%=MinValue> <= x <= <%=MaxValue>
 
 ## Built With
 * [LINE](https://developers.line.me/en/) - Platform of the Chatbot

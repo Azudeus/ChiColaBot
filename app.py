@@ -126,8 +126,8 @@ def handle_choose(text):
     
 def handle_rng(text):
 	arr = text.split(' ')
-	if (int(arr[1]) < int(arr[2])):
-		return random.randrange(int(arr[1]),int(arr[2]))
+	if (int(arr[1]) < int(arr[2])+1):
+		return random.randrange(int(arr[1]),int(arr[2])+1)
 	else:
 		return ''
     

@@ -3,6 +3,7 @@ from flask import Flask, request, abort
 import requests
 import json
 import sys
+import random
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -64,6 +65,10 @@ def handle_pattern(text):
 			ret = handle_convert(text)
 		elif keyword == 'jpytoidr':
 			ret = handle_convert_jpy_idr(value)
+		elif keyword == 'choose':
+			ret = handle_choose(text)
+		elif keyword == 'rng':
+			ret = handle_rng(text)
 	except (ValueError, IndexError) as e:
 		ret = ''
 
@@ -108,6 +113,24 @@ def handle_convert_jpy_idr(text):
 		ret = ''
 	return ret
 
+def handle_choose(text):
+	if (len(text) > 500):
+		ret = 'Choices is too long'
+	else:
+		text = text.replace('choose ','',1)
+		arr = text.split(',')
+		for i in range(len(arr)):
+			arr[i] = arr[i].strip()
+		ret = random.choice(arr)
+	return ret
+    
+def handle_rng(text):
+	arr = text.split(' ')
+	if (int(arr[1]) < int(arr[2])+1):
+		return random.randrange(int(arr[1]),int(arr[2])+1)
+	else:
+		return ''
+    
 def check_float(text):
 	try:
 		float(text)

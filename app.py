@@ -6,13 +6,13 @@ import sys
 import random
 
 from linebot import (
-    LineBotApi, WebhookHandler
+	LineBotApi, WebhookHandler
 )
 from linebot.exceptions import (
-    InvalidSignatureError
+	InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+	MessageEvent, TextMessage, TextSendMessage,
 )
 
 app = Flask(__name__)
@@ -27,35 +27,35 @@ def index():
 
 @app.route("/callback", methods=['POST'])
 def callback():
-    # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
+	# get X-Line-Signature header value
+	signature = request.headers['X-Line-Signature']
 
-    # get request body as text
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+	# get request body as text
+	body = request.get_data(as_text=True)
+	app.logger.info("Request body: " + body)
 
-    # handle webhook body
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        abort(400)
+	# handle webhook body
+	try:
+		handler.handle(body, signature)
+	except InvalidSignatureError:
+		abort(400)
 
-    return 'OK'
+	return 'OK'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    text = handle_pattern(event.message.text.lower()) #message from user
+	text = handle_pattern(event.message.text.lower()) #message from user
 
-    if (len(text)>0):
-    	message_reply = TextSendMessage(text=text)
-    	if (text == 'tsukkomi'):
-    		message_reply = ImageSendMessage(
-			    original_content_url='https://media.tenor.com/images/d85d3a03369bdd47b87ff4dc5c803a66/tenor.gif',
-			    preview_image_url='https://media.tenor.com/images/d85d3a03369bdd47b87ff4dc5c803a66/tenor.gif'
+	if (len(text)>0):
+		message_reply = TextSendMessage(text=text)
+		if (text == 'tsukkomi'):
+			message_reply = ImageSendMessage(
+				original_content_url='https://media.tenor.com/images/d85d3a03369bdd47b87ff4dc5c803a66/tenor.gif',
+				preview_image_url='https://media.tenor.com/images/d85d3a03369bdd47b87ff4dc5c803a66/tenor.gif'
 			)
-	    line_bot_api.reply_message(
-	        event.reply_token,
-	        message_reply) #reply the same message from user
+		line_bot_api.reply_message(
+			event.reply_token,
+			message_reply) #reply the same message from user
 
 def handle_pattern(text):
 	try:
@@ -131,14 +131,14 @@ def handle_choose(text):
 			arr[i] = arr[i].strip()
 		ret = random.choice(arr)
 	return ret
-    
+	
 def handle_rng(text):
 	arr = text.split(' ')
 	if (int(arr[1]) < int(arr[2])+1):
 		return str(random.randrange(int(arr[1]),int(arr[2])+1))
 	else:
 		return ''
-    
+	
 def check_float(text):
 	try:
 		float(text)

@@ -60,16 +60,18 @@ def handle_text_message(event):
 def handle_pattern(text):
 	try:
 		keyword = text.split(' ')[0]
-		value = text.split(' ')[1]
 		if keyword == 'tax':
+			value = text.split(' ')[1]
 			ret = str(int(float(value)*110/100))
 		elif keyword == 'serv' or keyword == 'service':
+			value = text.split(' ')[1]
 			ret = str(int(float(value)*105*110/10000))
 		elif keyword == 'sum':
 			ret = handle_sum(text)
 		elif keyword == 'conv' or keyword == 'convert':
 			ret = handle_convert(text)
 		elif keyword == 'jpytoidr':
+			value = text.split(' ')[1]
 			ret = handle_convert_jpy_idr(value)
 		elif keyword == 'choose':
 			ret = handle_choose(text)

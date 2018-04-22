@@ -58,6 +58,7 @@ def handle_text_message(event):
 			message_reply) #reply the same message from user
 
 def handle_pattern(text):
+	ret = ''
 	try:
 		keyword = text.split(' ')[0]
 		if keyword == 'tax':

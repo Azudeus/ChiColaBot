@@ -155,7 +155,7 @@ def handle_gbf_gw_search(text):
 		reqJson = req.json()
 		ret = ''
 		max = len(reqJson['result'])
-		if (max > 3)
+		if (max > 3):
 			max = 3
 		for i in range(0, max):
 			for key in reqJson['result'][i]['data']:

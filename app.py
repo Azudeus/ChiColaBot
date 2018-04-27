@@ -147,14 +147,18 @@ def handle_rng(text):
 		
 def handle_gbf_gw_search(text):
 	#Using http://gbf.gw.lt
-	req = requests.post('http://gbf.gw.lt/gw-guild-searcher/search', data = '{"search": "' + text + '"}')
+	encoded_text = ('{"search": "' + text + '"}').encode('utf-8')
+	req = requests.post('http://gbf.gw.lt/gw-guild-searcher/search', data = encoded_text)
 	if (req.status_code >= 400):
 		return ''
 	else:
 		reqJson = req.json()
 		ret = ''
-		for crew in reqJson['result']:
-			for key in crew['data']:
+		max = len(reqJson['result'])
+		if (max > 3)
+			max = 3
+		for i in range(0, max):
+			for key in reqJson['result'][i]['data']:
 				if (key['is_seed'] == 1):
 					seed = 'True'
 				else:

@@ -78,6 +78,9 @@ def handle_pattern(text):
 			ret = handle_choose(text)
 		elif keyword == 'rng':
 			ret = handle_rng(text)
+		elif keyword == 'gbfgwsearch':
+			value = text.split(' ')[1]
+			ret = handle_gbf_gw_search(value)
 		elif keyword == 'tsukkomi':
 			ret = 'tsukkomi'
 	except (ValueError, IndexError) as e:
@@ -141,7 +144,29 @@ def handle_rng(text):
 		return str(random.randrange(int(arr[1]),int(arr[2])+1))
 	else:
 		return ''
-	
+		
+def handle_gbf_gw_search(text):
+	#Using http://gbf.gw.lt
+	encoded_text = ('{"search": "' + text + '"}').encode('utf-8')
+	req = requests.post('http://gbf.gw.lt/gw-guild-searcher/search', data = encoded_text)
+	if (req.status_code >= 400):
+		return ''
+	else:
+		reqJson = req.json()
+		ret = ''
+		max = len(reqJson['result'])
+		if (max > 3):
+			max = 3
+		for i in range(0, max):
+			for key in reqJson['result'][i]['data']:
+				if (key['is_seed'] == 1):
+					seed = 'True'
+				else:
+					seed = 'False'
+				ret = ret + key['name'] + ' - GW:' + str(key['gw_num']) + ' - Rank:' + str(key['rank']) + ' - pts:' + str(key['points']) + ' - seed:' + seed + '\n'
+			ret = ret + '\n'
+		return ret
+
 def check_float(text):
 	try:
 		float(text)

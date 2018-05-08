@@ -1,5 +1,6 @@
 # encoding: utf-8
 from flask import Flask, request, abort
+from bs4 import BeautifulSoup
 import requests
 import json
 import sys
@@ -83,6 +84,8 @@ def handle_pattern(text):
 			ret = handle_gbf_gw_search(value)
 		elif keyword == 'tsukkomi':
 			ret = 'tsukkomi'
+		elif keyword == 'horrib':
+			ret = handle_horrib()
 	except (ValueError, IndexError) as e:
 		ret = ''
 
@@ -166,6 +169,17 @@ def handle_gbf_gw_search(text):
 				ret = ret + key['name'] + ' - GW:' + str(key['gw_num']) + ' - Rank:' + str(key['rank']) + ' - pts:' + str(key['points']) + ' - seed:' + seed + '\n'
 			ret = ret + '\n'
 		return ret
+
+def handle_horrib():
+	ret = ''
+	r  = requests.get("http://horriblesubs.info/")
+
+	data = r.text
+
+	soup = BeautifulSoup(data, "lxml")
+	schedule = soup.find("table", {"class": "schedule-table"})
+	for show in schedule:
+		ret = ret + show.find('a').contents[0] + ' ' + show.find('td',{"class": "schedule-time"}).contents[0] + '\n'
 
 def check_float(text):
 	try:

@@ -180,6 +180,8 @@ def handle_horrib():
 	schedule = soup.find("table", {"class": "schedule-table"})
 	for show in schedule:
 		ret = ret + show.find('a').contents[0] + ' ' + show.find('td',{"class": "schedule-time"}).contents[0] + '\n'
+	return ret
+
 
 def check_float(text):
 	try:

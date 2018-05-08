@@ -179,8 +179,19 @@ def handle_horrib():
 	soup = BeautifulSoup(data, "lxml")
 	schedule = soup.find("table", {"class": "schedule-table"})
 	for show in schedule:
-		ret = ret + show.find('a').contents[0] + ' ' + show.find('td',{"class": "schedule-time"}).contents[0] + '\n'
+		pdt_time = show.find('td',{"class": "schedule-time"}).contents[0]
+		wib_time = conv_pdt_to_wib(pdt_time)
+		ret = ret + show.find('a').contents[0] + ' ' + wib_time + ' WIB\n'
 	return ret
+	
+def conv_pdt_to_wib(pdt_time):
+	# could maybe use this instead https://docs.python.org/2/library/datetime.html#time-objects
+	pdt_hour = pdt_time.split(':')[0]
+	pdt_min = pdt_time.split(':')[1]
+
+	wib_hour = (int(pdt_hour) + 14) % 24
+	wib_time = str(wib_hour) + ':' + pdt_min
+	return wib_time
 
 def check_float(text):
 	try:

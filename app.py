@@ -1,5 +1,6 @@
 # encoding: utf-8
 from flask import Flask, request, abort
+from bs4 import BeautifulSoup
 import requests
 import json
 import sys
@@ -78,8 +79,13 @@ def handle_pattern(text):
 			ret = handle_choose(text)
 		elif keyword == 'rng':
 			ret = handle_rng(text)
+		elif keyword == 'gbfgwsearch':
+			value = text.split(' ')[1]
+			ret = handle_gbf_gw_search(value)
 		elif keyword == 'tsukkomi':
 			ret = 'tsukkomi'
+		elif keyword == 'horrib':
+			ret = handle_horrib()
 		elif keyword == 'tes':
 			ret = 'masuk'
 		elif keyword == 'test':
@@ -145,7 +151,52 @@ def handle_rng(text):
 		return str(random.randrange(int(arr[1]),int(arr[2])+1))
 	else:
 		return ''
+		
+def handle_gbf_gw_search(text):
+	#Using http://gbf.gw.lt
+	encoded_text = ('{"search": "' + text + '"}').encode('utf-8')
+	req = requests.post('http://gbf.gw.lt/gw-guild-searcher/search', data = encoded_text)
+	if (req.status_code >= 400):
+		return ''
+	else:
+		reqJson = req.json()
+		ret = ''
+		max = len(reqJson['result'])
+		if (max > 3):
+			max = 3
+		for i in range(0, max):
+			for key in reqJson['result'][i]['data']:
+				if (key['is_seed'] == 1):
+					seed = 'True'
+				else:
+					seed = 'False'
+				ret = ret + key['name'] + ' - GW:' + str(key['gw_num']) + ' - Rank:' + str(key['rank']) + ' - pts:' + str(key['points']) + ' - seed:' + seed + '\n'
+			ret = ret + '\n'
+		return ret
+
+def handle_horrib():
+	ret = ''
+	r  = requests.get("http://horriblesubs.info/")
+
+	data = r.text
+
+	soup = BeautifulSoup(data, "lxml")
+	schedule = soup.find("table", {"class": "schedule-table"})
+	for show in schedule:
+		pdt_time = show.find('td',{"class": "schedule-time"}).contents[0]
+		wib_time = conv_pdt_to_wib(pdt_time)
+		ret = ret + show.find('a').contents[0] + ' ' + wib_time + ' WIB\n'
+	return ret
 	
+def conv_pdt_to_wib(pdt_time):
+	# could maybe use this instead https://docs.python.org/2/library/datetime.html#time-objects
+	pdt_hour = pdt_time.split(':')[0]
+	pdt_min = pdt_time.split(':')[1]
+
+	wib_hour = (int(pdt_hour) + 14) % 24
+	wib_time = str(wib_hour) + ':' + pdt_min
+	return wib_time
+
 def check_float(text):
 	try:
 		float(text)

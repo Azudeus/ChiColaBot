@@ -13,6 +13,9 @@ Note: Case insensetive
 * JpyToIdr <%=Value> : Show rates between JPY to IDR and count the converted value
 * Choose <%=Text>, <%=Text> .. : Randomly choose one text from all supplied <%=Text> (comma separated)
 * RNG <%=MinValue> <%=MaxValue> : Randomly generate integer x such that <%=MinValue> <= x <= <%=MaxValue>
+* gbfgwsearch <%=Text> : Search for UnF/GW ranking details of GBF crew named <%=Text> (shows only 3 crews based on http://gbf.gw.lt)
+* horrib : shows today's release schedule of horrible subs in WIB timezone, taken from http://horriblesubs.info
+* tsukkomi : slap someone virtually for saying something dumb
 
 ## Built With
 * [LINE](https://developers.line.me/en/) - Platform of the Chatbot

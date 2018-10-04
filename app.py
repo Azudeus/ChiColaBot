@@ -80,6 +80,10 @@ def handle_pattern(text):
 			ret = handle_rng(text)
 		elif keyword == 'tsukkomi':
 			ret = 'tsukkomi'
+		elif keyword == 'tes':
+			ret = 'masuk'
+		elif keyword == 'test':
+			ret = 'masuk'
 	except (ValueError, IndexError) as e:
 		ret = ''
 

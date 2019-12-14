@@ -5,6 +5,7 @@ import requests
 import json
 import sys
 import random
+import os
 
 from linebot import (
 	LineBotApi, WebhookHandler
@@ -18,9 +19,9 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('ulnphNOuEmnoh2thksT1pvCnvm5hJ4H2EuwwCZd/3AvvEihFLu1w7wdSS+mnl4ZH4+8tb+O0KFEtwGuxwFD8dLwYs/k4daCh3x774a6NwsEAXXX4SnYLJJZFYECDSpPVIUSNaD9+6SxyIgapGgmNpwdB04t89/1O/w1cDnyilFU=') #Your Channel Access Token
-handler = WebhookHandler('488e36b743ec757a4e7843d9022d3259') #Your Channel Secret
-fixer_key = '3befaf87f682bd0c9be237d609e6f4ba'
+line_bot_api = LineBotApi(os.environ['LINE_BOT_TOKEN']) #Your Channel Access Token
+handler = WebhookHandler(os.environ['CHANNEL_SECRET']) #Your Channel Secret
+fixer_key = os.environ['FIXER_KEY']
 
 @app.route('/')
 def index():

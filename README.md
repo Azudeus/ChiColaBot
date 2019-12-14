@@ -22,8 +22,9 @@ Note: Case insensetive
 * [Flask](http://flask.pocoo.org/) - Python Framework
 
 ## Additional Notes
-Since it's a bot dedicated for us, don't complain about publicing our key. 
-Maybe later will manage it but now too lazy. But don't hijack it please :).
+~~Since it's a bot dedicated for us, don't complain about publicing our key.~~
+~~Maybe later will manage it but now too lazy. But don't hijack it please :).~~
+Finally Fixed :D
 
 If you want to use it, refer to @fua1116q in LINE. Not like anyone gonna use it tho :3
 

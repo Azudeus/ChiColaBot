@@ -88,9 +88,9 @@ def handle_pattern(text):
 		elif keyword == 'horrib':
 			ret = handle_horrib()
 		elif keyword == 'tes':
-			ret = 'masuk'
+			ret = handle_test()
 		elif keyword == 'test':
-			ret = 'masuk'
+			ret = handle_test()
 	except (ValueError, IndexError) as e:
 		ret = ''
 
@@ -197,6 +197,11 @@ def conv_pdt_to_wib(pdt_time):
 	wib_hour = (int(pdt_hour) + 14) % 24
 	wib_time = str(wib_hour) + ':' + pdt_min
 	return wib_time
+
+def handle_test():
+	ret_texts = ["masuk", "masuk pak eko", "ga masuk", "dikit lagi", "sayang sekali", "nyaris gan", "masuk tapi gagal", "no response, it's just a corpse", "mau masuk tapi gagal", "akan masuk", "bentar lagi masuk", "masuk sempurna", "fertilized", "ga muat", "ga sempet masuk", "masuk tapi keluar lagi", "ga jadi masuk", "denied", "bukan aan ya kamu", "kuy sudirman", "bentar lagi baru masuk", "no message found", "404 error", "malah kuda yang masuk"]
+	ret = "masuk" if random.getrandbits(1) else random.choice(ret_texts)
+	return ret
 
 def check_float(text):
 	try:

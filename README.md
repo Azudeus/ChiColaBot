@@ -16,6 +16,7 @@ Note: Case insensetive
 * gbfgwsearch <%=Text> : Search for UnF/GW ranking details of GBF crew named <%=Text> (shows only 3 crews based on http://gbf.gw.lt)
 * horrib : shows today's release schedule of horrible subs in WIB timezone, taken from http://horriblesubs.info
 * tsukkomi : slap someone virtually for saying something dumb
+* test : repeat with indicator that a message has been received
 
 ## Built With
 * [LINE](https://developers.line.me/en/) - Platform of the Chatbot
